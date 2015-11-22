@@ -79,4 +79,4 @@ DateMesure DATE,
 Poids int NOT NULL,
 Taille int NOT NULL,
 PRIMARY KEY (CodeIndividu, DateMesure),
-FOREIGN KEY CodeIndividu REFERENCING Individu(CodeIndividu));
+FOREIGN KEY CodeIndividu REFERENCING Individu(CodeIndividu))
