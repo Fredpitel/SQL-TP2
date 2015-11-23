@@ -18,27 +18,31 @@ Telephone VARCHAR(12) NOT NULL,
 Fonction VARCHAR(30) NOT NULL,
 Service VARCHAR(30) NOT NULL,
 Taux INTEGER CHECK (Taux > 0),
-Grade VARCHAR(2) CHECK (Grade IN ('G1', 'G2', 'G3', 'G4', 'G5'))
+Grade VARCHAR(2) CHECK (Grade IN ('G1', 'G2', 'G3', 'G4', 'G5')
+)
 /
 CREATE TABLE Salaire
 (CodeEmploye VARCHAR(3),
 Mois INTEGER CHECK (Mois > 0 AND Mois <= 12),
 Salaire INTEGER NOT NULL CHECK (Salaire >= 0),
 PRIMARY KEY (CodeEmploye, Mois),
-FOREIGN KEY CodeEmploye REFERENCES Employe(CodeEmploye))
+FOREIGN KEY CodeEmploye REFERENCES Employe(CodeEmploye)
+)
 /
 CREATE TABLE Zone
 (CodeZone INTEGER PRIMARY KEY CHECK (CodeZone > 0),
 NomZone VARCHAR(30) NOT NULL,
 ChefZone VARCHAR(3) NOT NULL,
-FOREIGN KEY ChefZone REFERENCES Employe(CodeEmploye))
+FOREIGN KEY ChefZone REFERENCES Employe(CodeEmploye)
+)
 /
 CREATE TABLE Lotissement
 (CodeZone INTEGER,
 CodeLotissement INTEGER CHECK (CodeLotissement > 0),
 NomLotissement VARCHAR(30) NOT NULL,
 PRIMARY KEY (CodeZone, CodeLotissement),
-FOREIGN KEY CodeZone REFERENCES Zone (CodeZone))
+FOREIGN KEY CodeZone REFERENCES Zone (CodeZone)
+)
 /
 CREATE TABLE Surveillance
 (CodeEmploye VARCHAR(3),
@@ -49,7 +53,8 @@ Heure INTEGER NOT NULL CHECK (HEURE >= 9 AND HEURE <= 17),
 PRIMARY KEY (CodeEmploye, CodeZone, CodeLotissement),
 FOREIGN KEY CodeEmploye REFERENCES Employe(CodeEmploye),
 FOREIGN KEY CodeZone REFERENCES Zone(CodeZone),
-FOREIGN KEY CodeLotissement REFERENCES Lotissement(CodeLotissement))
+FOREIGN KEY CodeLotissement REFERENCES Lotissement(CodeLotissement)
+)
 /
 CREATE TABLE Choix
 (CodeEmploye VARCHAR(3),
@@ -57,7 +62,8 @@ CodeZone INTEGER,
 Affinite INTEGER NOT NULL CHECK (Affinite IN('0', '1')),
 PRIMARY KEY (CodeEmploye, CodeZone),
 FOREIGN KEY CodeEmploye REFERENCES Employe(CodeEmploye),
-FOREIGN KEY CodeZone REFERENCES Zone(CodeZone))
+FOREIGN KEY CodeZone REFERENCES Zone(CodeZone)
+)
 /
 CREATE TABLE Espece
 (CodeEspece INTEGER PRIMARY KEY CHECK (CodeEspece > 0),
@@ -66,7 +72,8 @@ Nombre INTEGER CHECK (Nombre > 0),
 CodeZone INTEGER,
 CodeLotissement INTEGER,
 FOREIGN KEY CodeZone REFERENCES Zone(CodeZone)
-FOREIGN KEY CodeLotissement REFERENCES Lotissement(CodeLotissement))
+FOREIGN KEY CodeLotissement REFERENCES Lotissement(CodeLotissement)
+)
 /
 CREATE TABLE Individu
 (CodeIndividu INTEGER PRIMARY KEY CHECK (CodeIndividu > 0),
@@ -79,7 +86,8 @@ Pere INTEGER,
 Mere INTEGER,
 FOREIGN KEY CodeEspece REFERENCES Espece(CodeEspece),
 FOREIGN KEY Pere REFERENCES Individu(CodeIndividu),
-FOREIGN KEY Mere REFERENCES Individu(CodeIndividu))
+FOREIGN KEY Mere REFERENCES Individu(CodeIndividu)
+)
 /
 CREATE TABLE Mesure
 (CodeIndividu INTEGER,
@@ -87,7 +95,8 @@ DateMesure DATE DEFAULT GETDATE() NOT NULL,
 Poids INTEGER NOT NULL CHECK (Poids > 0),
 Taille INTEGER NOT NULL CHECK (Taille > 0),
 PRIMARY KEY (CodeIndividu, DateMesure),
-FOREIGN KEY CodeIndividu REFERENCES Individu(CodeIndividu))
+FOREIGN KEY CodeIndividu REFERENCES Individu(CodeIndividu)
+)
 /
 COMMIT
 /
