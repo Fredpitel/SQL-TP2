@@ -83,7 +83,7 @@ FOREIGN KEY Mere REFERENCES Individu(CodeIndividu))
 /
 CREATE TABLE Mesure
 (CodeIndividu INTEGER,
-DateMesure DATE NOT NULL,
+DateMesure DATE DEFAULT GETDATE() NOT NULL,
 Poids INTEGER NOT NULL CHECK (Poids > 0),
 Taille INTEGER NOT NULL CHECK (Taille > 0),
 PRIMARY KEY (CodeIndividu, DateMesure),
