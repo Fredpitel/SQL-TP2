@@ -99,6 +99,3 @@ FOREIGN KEY CodeIndividu REFERENCES Individu(CodeIndividu)
 )
 /
 SET ECHO OFF
-
-
-
