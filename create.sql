@@ -98,8 +98,6 @@ PRIMARY KEY (CodeIndividu, DateMesure),
 FOREIGN KEY CodeIndividu REFERENCES Individu(CodeIndividu)
 )
 /
-COMMIT
-/
 SET ECHO OFF
 
 
