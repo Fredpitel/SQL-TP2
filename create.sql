@@ -1,6 +1,6 @@
 --
 -- Script de creation des tables
--- Frédéric Pite;, Kevin Blais
+-- Frédéric Pitel;, Kevin Blais
 -- Code permanent: PITF16088608
 -- Code permanent:
 -- 
