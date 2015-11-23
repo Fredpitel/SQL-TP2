@@ -6,7 +6,6 @@
 -- 
 --
 SET ECHO ON
-
 CREATE TABLE Employe
 (CodeEmploye VARCHAR(3) PRIMARY KEY,
 NAS INTEGER NOT NULL,
@@ -68,7 +67,7 @@ CodeZone INTEGER,
 CodeLotissement INTEGER,
 FOREIGN KEY CodeZone REFERENCING Zone(CodeZone)
 FOREIGN KEY CodeLotissement REFERENCING Lotissement(CodeLotissement));
-
+/
 CREATE TABLE Individu
 (CodeIndividu INTEGER PRIMARY KEY CHECK (CodeIndividu > 0),
 NomIndividu VARCHAR(30) NOT NULL,
