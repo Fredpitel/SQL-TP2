@@ -4,7 +4,6 @@
 -- Code permanent: PITF16088608
 -- Code permanent:
 -- 
---
 SET ECHO ON
 CREATE TABLE Employe
 (CodeEmploye VARCHAR(3) PRIMARY KEY,
