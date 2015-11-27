@@ -1,8 +1,8 @@
 --
 -- Script de creation des tables
--- Frédéric Pitel;, Kevin Blais
+-- Frédéric Pitel;, Keven Blais
 -- Code permanent: PITF16088608
--- Code permanent:
+-- Code permanent: BLAK29019305
 -- 
 SET ECHO ON
 CREATE TABLE Employe
@@ -28,7 +28,7 @@ PRIMARY KEY (CodeEmploye, Mois),
 FOREIGN KEY CodeEmploye REFERENCES Employe(CodeEmploye)
 )
 /
-CREATE TABLE Zone
+CREATE TABLE Zones
 (CodeZone INTEGER PRIMARY KEY CHECK (CodeZone > 0),
 NomZone VARCHAR(30) NOT NULL,
 ChefZone VARCHAR(3) NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE Lotissement
 CodeLotissement INTEGER CHECK (CodeLotissement > 0),
 NomLotissement VARCHAR(30) NOT NULL,
 PRIMARY KEY (CodeZone, CodeLotissement),
-FOREIGN KEY CodeZone REFERENCES Zone (CodeZone)
+FOREIGN KEY CodeZone REFERENCES Zones (CodeZone)
 )
 /
 CREATE TABLE Surveillance
@@ -51,7 +51,7 @@ Jour VARCHAR(8) NOT NULL CHECK (Jour IN ('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 
 Heure INTEGER NOT NULL CHECK (HEURE >= 9 AND HEURE <= 17),
 PRIMARY KEY (CodeEmploye, CodeZone, CodeLotissement),
 FOREIGN KEY CodeEmploye REFERENCES Employe(CodeEmploye),
-FOREIGN KEY CodeZone REFERENCES Zone(CodeZone),
+FOREIGN KEY CodeZone REFERENCES Zones(CodeZone),
 FOREIGN KEY CodeLotissement REFERENCES Lotissement(CodeLotissement)
 )
 /
@@ -61,7 +61,7 @@ CodeZone INTEGER,
 Affinite INTEGER NOT NULL CHECK (Affinite IN('0', '1')),
 PRIMARY KEY (CodeEmploye, CodeZone),
 FOREIGN KEY CodeEmploye REFERENCES Employe(CodeEmploye),
-FOREIGN KEY CodeZone REFERENCES Zone(CodeZone)
+FOREIGN KEY CodeZone REFERENCES Zones(CodeZone)
 )
 /
 CREATE TABLE Espece
@@ -70,7 +70,7 @@ NomEspece VARCHAR(30) NOT NULL,
 Nombre INTEGER CHECK (Nombre > 0),
 CodeZone INTEGER,
 CodeLotissement INTEGER,
-FOREIGN KEY CodeZone REFERENCES Zone(CodeZone)
+FOREIGN KEY CodeZone REFERENCES Zones(CodeZone)
 FOREIGN KEY CodeLotissement REFERENCES Lotissement(CodeLotissement)
 )
 /

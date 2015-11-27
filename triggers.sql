@@ -1,9 +1,10 @@
 --
 -- Script de creation des triggers
--- Auteurs
--- Code permanent:
--- Code permanent:
---
+-- Frédéric Pitel;, Keven Blais
+-- Code permanent: PITF16088608
+-- Code permanent: BLAK29019305
+-- 
+
 SET ECHO ON
 
 -- ecrire sql ici
