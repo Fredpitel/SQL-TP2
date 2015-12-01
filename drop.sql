@@ -1,6 +1,6 @@
 --
 -- Script de nettoyage
--- Frédéric Pitel;, Keven Blais
+-- FrÃ©dÃ©ric Pitel;, Keven Blais
 -- Code permanent: PITF16088608
 -- Code permanent: BLAK29019305
 -- 
@@ -17,7 +17,7 @@ DROP TABLE Surveillance
 /
 DROP TABLE Lotissement
 /
-DROP TABLE Zone
+DROP TABLE Zones
 /
 DROP TABLE Salaire
 /
