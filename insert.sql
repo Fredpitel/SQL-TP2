@@ -1,6 +1,6 @@
 --
 -- Script de remplissage
--- Frédéric Pitel;, Keven Blais
+-- FrÃ©dÃ©ric Pitel;, Keven Blais
 -- Code permanent: PITF16088608
 -- Code permanent: BLAK29019305
 -- 
@@ -11,11 +11,11 @@ SET ECHO ON
 -- ecrire sql ici
 
 INSERT INTO Employe
- 	VALUES('111',123456789,'jean','auclair',NULL,'03/06/2000','2256 des quenouille','418-246-2789','concierge','service1',30,'G5')
+ 	VALUES('111',123456789,'jean','auclair',NULL,'2000/10/03','2256 des quenouille','418-246-2789','concierge','service1',30,'G5')
 /
 
 INSERT INTO Employe
- 	VALUES('112',987654321,'bob','legoinfre',NULL,'03/06/1896','rue de la gloire','666-666-6666','THE BOSS','servic2',100,'G5')
+ 	VALUES('112',987654321,'bob','legoinfre',NULL,'1996/06/03','rue de la gloire','666-666-6666','THE BOSS','servic2',100,'G5')
 /
 
 INSERT INTO Salaire
@@ -43,11 +43,11 @@ INSERT INTO Lotissement
 /
 
 INSERT INTO Surveillance
- 	VALUES('111',6,5,'lundi',14)
+ 	VALUES('111',6,	5,'Lundi',14)
 /
 
 INSERT INTO Surveillance
- 	VALUES('112',5,1,'mardi',10)
+ 	VALUES('112',5,1,'Mardi',10)
 /
 
 INSERT INTO Choix
@@ -67,19 +67,19 @@ INSERT INTO Espece
 /
 
 INSERT INTO Individu
- 	VALUES(1,'jeanLeSerpent',1,'A-','19-01-93',NULL,2,3)
+ 	VALUES(1,'jeanLeSerpent',1,'A-','1993/01/19',NULL,NULL,NULL)
 /
 
 INSERT INTO Individu
- 	VALUES(4,'boblaigle',2,'A+','19-01-99',NULL,5,6)
+ 	VALUES(4,'boblaigle',2,'A+','1999/01/27',NULL,NULL,NULL)
 /
 
 INSERT INTO Mesure
- 	VALUES(1,GETDATE(),70,280)
+ 	VALUES(1,sysdate,70,280)
 /
 
 INSERT INTO Mesure
- 	VALUES(4,GETDATE(),40,90)
+ 	VALUES(4,sysdate,40,90)
 /
 
 SET ECHO OFF
