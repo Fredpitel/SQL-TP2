@@ -5,6 +5,8 @@
 -- Code permanent: BLAK29019305
 -- 
 SET ECHO ON
+
+
 CREATE TABLE Employe
 (
 CodeEmploye VARCHAR(3) PRIMARY KEY,
