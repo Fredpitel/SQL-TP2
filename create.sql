@@ -6,6 +6,10 @@
 -- 
 SET ECHO ON
 
+SPOOL create.res
+@create.sql
+SPOOL OFF
+
 CREATE TABLE Employe
 (
 CodeEmploye VARCHAR(3) PRIMARY KEY,
