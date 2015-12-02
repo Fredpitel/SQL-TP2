@@ -22,24 +22,24 @@ Taux INTEGER CHECK (Taux > 0),
 Grade VARCHAR(2) CHECK (Grade IN ('G1', 'G2', 'G3', 'G4', 'G5')),
 CONSTRAINT fonctionMedicaleCoherente CHECK (
 NOT EXISTS (SELECT *
-			FROM Employe
-			WHERE Service = 'Médical'
-			AND (Fonction <> 'Vétérinaire' OR Fonction <> 'Infirmière')
-			)
+	    FROM Employe
+	    WHERE Service = 'Médical'
+	    AND (Fonction <> 'Vétérinaire' OR Fonction <> 'Infirmière')
+	    )
 ),
 CONSTRAINT fonctionSurveillanceCoherente CHECK (
 NOT EXISTS (SELECT *
-			FROM Employe
-			WHERE Service = 'Surveillance'
-			AND (Fonction <> 'Surveillant' OR Fonction <> 'Chef de zone')
-			)
+	    FROM Employe
+	    WHERE Service = 'Surveillance'
+	    AND (Fonction <> 'Surveillant' OR Fonction <> 'Chef de zone')
+	    )
 ),
 CONSTRAINT fonctionAdminCoherente CHECK (
 NOT EXISTS (SELECT *
-			FROM Employe
-			WHERE Service = 'Administratif'
-			AND (Fonction <> 'Secrétaire' OR Fonction <> 'Comptable' OR Fonction <> 'Chef du personnel' OR <> 'Directeur')
-			)
+	    FROM Employe
+	    WHERE Service = 'Administratif'
+	    AND (Fonction <> 'Secrétaire' OR Fonction <> 'Comptable' OR Fonction <> 'Chef du personnel' OR <> 'Directeur')
+	    )
 )
 )
 /
@@ -83,12 +83,7 @@ PRIMARY KEY (CodeEmploye, CodeZone, CodeLotissement),
 FOREIGN KEY (CodeEmploye) REFERENCES Employe(CodeEmploye)
 ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY (CodeZone,CodeLotissement) REFERENCES Lotissement(CodeZone ,CodeLotissement)
-ON DELETE CASCADE ON UPDATE CASCADE,<
-CONSTRAINT unSeulSurveillant CHECK (
-NOT EXISTS(SELECT CodeLotissement, Jour, Heure
-
-)
-)
+ON DELETE CASCADE ON UPDATE CASCADE
 )
 /
 CREATE TABLE Choix
@@ -103,9 +98,9 @@ FOREIGN KEY (CodeZone) REFERENCES Zones(CodeZone)
 ON DELETE CASCADE ON UPDATE CASCADE,
 CONSTRAINT uneZoneParChoix CHECK (
 NOT EXISTS (SELECT CodeEmploye, CodeZone
-			FROM Choix
-			GROUP BY CodeEmploye, CodeZone
-			HAVING COUNT(DISTINCT CodeZone) > 1)
+	    FROM Choix
+	    GROUP BY CodeEmploye, CodeZone
+	    HAVING COUNT(DISTINCT CodeZone) > 1)
 )
 )
 /
