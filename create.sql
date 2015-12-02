@@ -9,11 +9,11 @@ SET ECHO ON
 CREATE TABLE Employe
 (
 CodeEmploye VARCHAR(3) PRIMARY KEY,
-NAS VARCHAR(9) NOT NULL,
+NAS VARCHAR(9) NOT NULL CHECK (LENGTH(NAS) = 9),
 Nom VARCHAR(30) NOT NULL,
 Prenom VARCHAR(30) NOT NULL,
 NomJeuneFille VARCHAR(30),
-DateNaissance DATE NOT NULL CHECK (sysdate >= add_months(DateNaissance, 384)),
+DateNaissance DATE NOT NULL CHECK (SYSDATE >= ADD_MONTHS(DateNaissance, 384)),
 Adresse VARCHAR(100) NOT NULL,
 Telephone VARCHAR(12) NOT NULL,
 Fonction VARCHAR(30) NOT NULL,
@@ -22,24 +22,24 @@ Taux INTEGER CHECK (Taux > 0),
 Grade VARCHAR(2) CHECK (Grade IN ('G1', 'G2', 'G3', 'G4', 'G5')),
 CONSTRAINT fonctionMedicaleCoherente CHECK (
 NOT EXISTS (SELECT *
-			FROM Employe
-			WHERE Service = 'Médical'
-			AND (Fonction <> 'Vétérinaire' OR Fonction <> 'Infirmière')
-			)
+	    FROM Employe
+	    WHERE Service = 'Médical'
+	    AND (Fonction <> 'Vétérinaire' OR Fonction <> 'Infirmière')
+	    )
 ),
 CONSTRAINT fonctionSurveillanceCoherente CHECK (
 NOT EXISTS (SELECT *
-			FROM Employe
-			WHERE Service = 'Surveillance'
-			AND (Fonction <> 'Surveillant' OR Fonction <> 'Chef de zone')
-			)
+	    FROM Employe
+	    WHERE Service = 'Surveillance'
+	    AND (Fonction <> 'Surveillant' OR Fonction <> 'Chef de zone')
+	    )
 ),
 CONSTRAINT fonctionAdminCoherente CHECK (
 NOT EXISTS (SELECT *
-			FROM Employe
-			WHERE Service = 'Administratif'
-			AND (Fonction <> 'Secrétaire' OR Fonction <> 'Comptable' OR Fonction <> 'Chef du personnel' OR <> 'Directeur')
-			)
+	    FROM Employe
+	    WHERE Service = 'Administratif'
+	    AND (Fonction <> 'Secrétaire' OR Fonction <> 'Comptable' OR Fonction <> 'Chef du personnel' OR <> 'Directeur')
+	    )
 )
 )
 /
@@ -83,12 +83,7 @@ PRIMARY KEY (CodeEmploye, CodeZone, CodeLotissement),
 FOREIGN KEY (CodeEmploye) REFERENCES Employe(CodeEmploye)
 ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY (CodeZone,CodeLotissement) REFERENCES Lotissement(CodeZone ,CodeLotissement)
-ON DELETE CASCADE ON UPDATE CASCADE,<
-CONSTRAINT unSeulSurveillant CHECK (
-NOT EXISTS(SELECT CodeLotissement, Jour, Heure
-
-)
-)
+ON DELETE CASCADE ON UPDATE CASCADE
 )
 /
 CREATE TABLE Choix
@@ -103,9 +98,9 @@ FOREIGN KEY (CodeZone) REFERENCES Zones(CodeZone)
 ON DELETE CASCADE ON UPDATE CASCADE,
 CONSTRAINT uneZoneParChoix CHECK (
 NOT EXISTS (SELECT CodeEmploye, CodeZone
-			FROM Choix
-			GROUP BY CodeEmploye, CodeZone
-			HAVING COUNT(DISTINCT CodeZone) > 1)
+	    FROM Choix
+	    GROUP BY CodeEmploye, CodeZone
+	    HAVING COUNT(DISTINCT CodeZone) > 1)
 )
 )
 /
@@ -142,7 +137,7 @@ ON DELETE CASCADE ON UPDATE CASCADE
 CREATE TABLE Mesure
 (
 CodeIndividu INTEGER,
-DateMesure DATE DEFAULT sysdate NOT NULL ,
+DateMesure DATE DEFAULT SYSDATE NOT NULL ,
 Poids INTEGER NOT NULL CHECK (Poids > 0),
 Taille INTEGER NOT NULL CHECK (Taille > 0),
 PRIMARY KEY (CodeIndividu, DateMesure),
