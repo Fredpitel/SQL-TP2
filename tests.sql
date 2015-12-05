@@ -128,10 +128,9 @@ ROLLBACK
 /
 
 -- Tests excluIndividu
-INSERT INTO Espece
-    VALUES(3,'gazelle',30,2,2)
-INSERT INTO Individu
-    VALUES(5,'bambi',3,'A-','2005/01/19',NULL,NULL,NULL)
+UPDATE Espece
+    SET Nombre = 5
+    WHERE CodeEspece = 1
 /
 ROLLBACK
 /
