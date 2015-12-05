@@ -157,6 +157,99 @@ END;
 /
 SHOW ERR;
 
+
+CREATE TRIGGER choixSurveillant
+BEFORE INSERT OR UPDATE ON Choix
+REFERENCING NEW AS ligneApres
+FOR EACH ROW
+DECLARE noZone INTEGER;
+BEGIN
+SELECT CodeZone INTO noZone
+FROM Choix
+WHERE CodeEmploye <> :ligneApres.CodeEmploye
+IF(noZone = :ligneApres.CodeZone)
+THEN RAISE_APPLICATION_ERROR(-20008,'plusieur surveillant ne peuvent survayer le meme endroit');
+END IF;
+END;
+/
+SHOW ERR;
+
+CREATE TRIGGER choixAffinite
+BEFORE INSERT OR UPDATE ON Choix
+REFERENCING NEW AS ligneApres
+FOR EACH ROW
+DECLARE noAffinite INTEGER;
+SELECT COUNT(Affinite) INTO noAffinite
+FROM Choix
+WHERE Affinite = :ligneApres.Affinite
+IF(noAffinite = 3)
+THEN RAISE_APPLICATION_ERROR(-20009,'l''une des affinitée a été choisie plus que 3 fois');
+END IF;
+END;
+/
+SHOW ERR;
+
+CREATE TRIGGER choixLotissement
+BEFORE INSERT OR UPDATE ON Espece
+REFERENCING NEW AS ligneApres
+FOR EACH ROW
+DECLARE noLotissement INTEGER;
+SELECT CodeLotissement INTO  noLotissement
+FROM  Espece
+WHERE CodeEspece = :ligneApres.CodeEspece
+IF(noLotissement <> :ligneApres.Lotissement)
+THEN RAISE_APPLICATION_ERROR(-20010,'l''espece possede deja un lotissement');
+END IF;
+END;
+/
+SHOW ERR;
+
+CREATE TRIGGER consecutifLotissement
+BEFORE INSERT OR UPDATE ON Lotissement
+REFERENCING NEW AS ligneApres
+FOR EACH ROW
+DECLARE noLotissement INTEGER;
+SELECT CodeLotissement INTO  noLotissement
+FROM Lotissement
+WHERE CodeZone = :ligneApres.CodeZone
+IF(noLotissement > :ligneApres.Lotissement)
+THEN RAISE_APPLICATION_ERROR(-20011,'l''ordre des lotissement doit etre croissant');
+END IF;
+END;
+/
+SHOW ERR;
+
+CREATE TRIGGER excluNombre
+BEFORE INSERT OR UPDATE ON Individu
+REFERENCING NEW AS ligneApres
+FOR EACH ROW
+DECLARE noEspece INTEGER;
+SELECT CodeEspece INTO noEspece
+FROM Espece, Individu
+WHERE noEspece = :ligneApres.CodeEspece
+IF(Espece.Nombre > 0)
+THEN RAISE_APPLICATION_ERROR(-20012,'nombre et individu ne peuvent etre selectionner silmultanement');
+END IF;
+END;
+/
+SHOW ERR;
+
+CREATE TRIGGER excluIndividu
+BEFORE INSERT OR UPDATE ON Espece
+REFERENCING NEW AS ligneApres
+FOR EACH ROW
+DECLARE noEspece INTEGER;
+SELECT CodeEspece INTO noEspece
+FROM Espece, Individu
+WHERE noEspece = :ligneApres.CodeEspece AND EXISTS (
+    SELECT *
+    FROM Espece, Individu
+    WHERE Espece.CodeEspece = Individu.CodeEspece
+    )
+IF(Espece.Nombre > 0)
+THEN RAISE_APPLICATION_ERROR(-20013,'nombre et individu ne peuvent etre selectionner silmultanement');
+END IF;
+END;
 SPOOL OFF;
 
 SET ECHO OFF
