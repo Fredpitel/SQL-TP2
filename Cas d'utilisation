@@ -1,0 +1,47 @@
+3.1. Cas d’utilisation « Noms de zones et les noms et prénoms des surveillants qui apprécient cette zone et dans lequel le nombre de volontaires est inférieur ou égal au nombre de lotissements à surveiller. »
+	Opération 1. 
+
+Trouver les noms des zones dont le nombre de volontaires est inférieur ou égal au nombre de lotissements à surveiller.
+
+SELECT CodeZone
+FROM Lotissement A
+GROUP BY CodeZone
+HAVING COUNT(CodeLotissement) >= (SELECT COUNT(CodeEmploye)
+                                  FROM Choix B
+                                  WHERE Affinite = 0 AND B.CodeZone = A.CodeZone)
+/
+
+•	Le résultat obtenu est : 
+
+Une table de codes de zones qui répondent aux critères. (Appelés ZoneRésultat ci-après)
+
+	Opération 2. 
+
+Obtenir les des zones trouvées et les noms des surveillants qui apprécient les zones trouvées.
+
+Pour chaque code dans ZoneRésultat :
+
+SELECT NomZone, Prenom, Nom
+FROM Employe A, Zones B, Choix C
+WHERE C.CodeZone = ZoneRésultat.CodeZone
+AND C.CodeEmploye = A.CodeEmploye
+AND B.CodeZone = C.CodeZone
+   /
+
+•	Le résultat obtenu est : 
+
+Une table contenant le nom de la zone et le prénom et le nom de chaque employé qui apprécie cette zone.
+
+3.2. Cas d’utilisation « Afficher la liste des Chefs de zone par Zone. »
+	Opération 1. 
+
+   Trouver le nom des chefs de chaque zone.
+
+   SELECT Prenom, Nom, CodeZone
+   FROM Employe,  Zones
+   WHERE CodeEmploye = ChefZone
+   /
+
+•	Le résultat obtenu est : 
+
+Une table contenant le prénom et le nom de chaque chef de zone suivi du code de la zone qu’il doit surveiller.
