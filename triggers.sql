@@ -242,7 +242,7 @@ DECLARE noEspece INTEGER;
 SELECT CodeEspece INTO noEspece
 FROM Espece, Individu
 WHERE noEspece = :ligneApres.CodeEspece AND EXISTS (
-    SELECT * INTO noEspece
+    SELECT *
     FROM Espece, Individu
     WHERE Espece.CodeEspece = Individu.CodeEspece
     )
