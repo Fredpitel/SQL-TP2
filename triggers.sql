@@ -185,6 +185,7 @@ WHERE Affinite = :ligneApres.Affinite
 IF(noAffinite = 3)
 THEN RAISE_APPLICATION_ERROR(-20009,'l''une des affinitée a été choisie plus que 3 fois');
 END IF;
+EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
 /
 SHOW ERR;
@@ -200,6 +201,7 @@ WHERE CodeEspece = :ligneApres.CodeEspece
 IF(noLotissement <> :ligneApres.Lotissement)
 THEN RAISE_APPLICATION_ERROR(-20010,'l''espece possede deja un lotissement');
 END IF;
+EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
 /
 SHOW ERR;
@@ -215,6 +217,7 @@ WHERE CodeZone = :ligneApres.CodeZone
 IF(noLotissement > :ligneApres.Lotissement)
 THEN RAISE_APPLICATION_ERROR(-20011,'l''ordre des lotissement doit etre croissant');
 END IF;
+EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
 /
 SHOW ERR;
@@ -230,6 +233,7 @@ WHERE noEspece = :ligneApres.CodeEspece
 IF(Espece.Nombre > 0)
 THEN RAISE_APPLICATION_ERROR(-20012,'nombre et individu ne peuvent etre selectionner silmultanement');
 END IF;
+EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
 /
 SHOW ERR;
@@ -249,7 +253,36 @@ WHERE noEspece = :ligneApres.CodeEspece AND EXISTS (
 IF(Espece.Nombre > 0)
 THEN RAISE_APPLICATION_ERROR(-20013,'nombre et individu ne peuvent etre selectionner silmultanement');
 END IF;
+EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
-SPOOL OFF;
+/
+SHOW ERR;
+
+
+CREATE TRIGGER parentEnfantMemeEspace
+BEFORE INSERT OR UPDATE ON Individu
+REFERENCING NEW AS ligneApres
+FOR EACH ROW
+IF(:ligneApres.Pere.CodeEspece = :ligneApres.Mere.CodeEspece AND :Pere.CodeEspece <> :ligneApres.CodeEspece)
+THEN RAISE_APPLICATION_ERROR(-20014,'si les parent sont de la meme espece alors l''enfant doit etre lui aussi de la meme espece');
+END IF
+EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
+END;
+/
+SHOW ERR;
+
+
+CREATE TRIGGER siPereAlorsMere
+BEFORE INSERT OR UPDATE ON Individu
+REFERENCING NEW AS ligneApres
+FOR EACH ROW
+IF(:ligneApres.Pere <> NULL AND :ligneApres.Mere = NULL)
+THEN RAISE_APPLICATION_ERROR(-20015,'si le pere est connu alors la mere doit aussi l''etre.');
+END IF
+EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
+END;
+/
+SHOW ERR;
+
 
 SET ECHO OFF
