@@ -205,7 +205,7 @@ BEFORE INSERT OR UPDATE ON Individu
 REFERENCING NEW AS ligneApres
 FOR EACH ROW
 DECLARE noEspece INTEGER;
-SELECT CodeEspece INTO noEspece
+SELECT Individu.CodeEspece INTO noEspece
 FROM Espece, Individu
 WHERE noEspece = :ligneApres.CodeEspece
 IF(Espece.Nombre > 0)
@@ -221,7 +221,7 @@ BEFORE INSERT OR UPDATE ON Espece
 REFERENCING NEW AS ligneApres
 FOR EACH ROW
 DECLARE noEspece INTEGER;
-SELECT CodeEspece INTO noEspece
+SELECT Espece.CodeEspece INTO noEspece
 FROM Espece, Individu
 WHERE noEspece = :ligneApres.CodeEspece AND EXISTS (
     SELECT *
