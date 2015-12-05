@@ -41,7 +41,7 @@ Keven:
 - Choix: Affinité 0 et 1 maximum 3 choix chaque  ---FAIT---
 - Une espece est toujours dans un seul lotissement  ---FAIT---
 - Zone: numéro de lotissement sont consécutifs   ---FAIT---
-- Espece: Nombre et Individu mutuellement exclusif
-- Date de naissance et déces des parents cohérents
+- Espece: Nombre et Individu mutuellement exclusif ---FAIT---
+- Date de naissance et déces des parents cohérents ---FAIT---
 - Si parents sont de la même espèce alors individu apartient à la même espèce
 - Si Père est connu alors Mère est connue
