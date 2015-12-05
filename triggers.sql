@@ -50,10 +50,10 @@ SELECT DISTINCT CodeZone INTO Code
 FROM Surveillance
 WHERE CodeEmploye = :ligneApres.CodeEmploye
 AND Jour = :ligneApres.Jour;
-EXCEPTION WHEN NO_DATA_FOUND THEN Code := :ligneApres.CodeZone;
 IF NOT(Code = :ligneApres.CodeZone)
 THEN RAISE_APPLICATION_ERROR(-20003, 'Un surveillant ne peut pas surveiller plus d''une zone par jour.');
 END IF;
+EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
 /
 SHOW ERR;
@@ -69,10 +69,10 @@ FROM Surveillance
 WHERE CodeEmploye = :ligneApres.CodeEmploye
 AND Jour = :ligneApres.Jour
 AND Heure = :ligneApres.Heure - 1;
-EXCEPTION WHEN NO_DATA_FOUND THEN LotissementPrecedent := -1;
 IF (:ligneApres.CodeLotissement = LotissementPrecedent)
 THEN RAISE_APPLICATION_ERROR(-20004, 'Un surveillant doit changer de lotissement toutes les heures.');
 END IF;
+EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
 /
 SHOW ERR;
@@ -88,10 +88,10 @@ FROM Surveillance
 WHERE CodeEmploye = :ligneApres.CodeEmploye
 AND Jour = :ligneApres.Jour
 AND Heure = :ligneApres.Heure + 1;
-EXCEPTION WHEN NO_DATA_FOUND THEN LotissementSuivant := -1;
 IF (:ligneApres.CodeLotissement = LotissementSuivant)
 THEN RAISE_APPLICATION_ERROR(-20004, 'Un surveillant doit changer de lotissement toutes les heures.');
 END IF;
+EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
 /
 SHOW ERR;
@@ -110,10 +110,10 @@ AND Heure = :ligneApres.Heure
 AND CodeZone = :ligneApres.CodeZone
 GROUP BY CodeLotissement
 HAVING COUNT(CodeEmploye) > 1;
-EXCEPTION WHEN NO_DATA_FOUND THEN nbSurveillant := 0;
 IF (nbSurveillant > 1)
 THEN RAISE_APPLICATION_ERROR(-20005, 'Il ne peut pas avoir plus d''un surveillant par lotissement par zone par jour par heure.');
 END IF;
+EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
 /
 SHOW ERR;
@@ -130,10 +130,10 @@ WHERE CodeEmploye = :ligneApres.CodeEmploye
 AND Jour = :ligneApres.Jour
 GROUP BY CodeEmploye
 HAVING COUNT(CodeZone) > 1;
-EXCEPTION WHEN NO_DATA_FOUND THEN nbZones := 0;
 IF (nbZones > 1)
 THEN RAISE_APPLICATION_ERROR(-20006, 'Tous les lotissements d''un surveillant pour un jour donné doivent être dans la même zone.');
 END IF;
+EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
 /
 SHOW ERR;
@@ -149,10 +149,10 @@ FROM Mesure
 WHERE CodeIndividu = :ligneApres.CodeIndividu
 GROUP BY DateMesure
 HAVING COUNT(*) > 1;
-EXCEPTION WHEN NO_DATA_FOUND THEN nbDates := 0;
 IF (nbDates > 1)
 THEN RAISE_APPLICATION_ERROR(-20007, 'Les dates des mesures d''un même individu doivent toutes être différentes.');
 END IF;
+EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
 /
 SHOW ERR;
