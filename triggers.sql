@@ -263,7 +263,7 @@ CREATE TRIGGER parentEnfantMemeEspace
 BEFORE INSERT OR UPDATE ON Individu
 REFERENCING NEW AS ligneApres
 FOR EACH ROW
-IF(:ligneApres.Pere.CodeEspece = :ligneApres.Mere.CodeEspece AND :Pere.CodeEspece <> :ligneApres.CodeEspece)
+IF(:ligneApres.Pere.CodeEspece = :ligneApres.Mere.CodeEspece AND :ligneApres.Pere.CodeEspece <> :ligneApres.CodeEspece)
 THEN RAISE_APPLICATION_ERROR(-20014,'si les parent sont de la meme espece alors l''enfant doit etre lui aussi de la meme espece');
 END IF
 EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
