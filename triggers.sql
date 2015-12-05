@@ -129,7 +129,7 @@ WHERE CodeEmploye = :ligneApres.CodeEmploye
 AND Jour = :ligneApres.Jour
 AND Heure = :ligneApres.Heure;
 IF NOT (HeureExistante IS NULL)
-THEN RAISE_APPLICATION_ERROR(-20005, 'Un surveillant ne peut pas surveiller deux lotissement différents pendant la même heure');
+THEN RAISE_APPLICATION_ERROR(-20006, 'Un surveillant ne peut pas surveiller deux lotissement différents pendant la même heure');
 END IF;
 EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
