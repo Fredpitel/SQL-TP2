@@ -23,7 +23,7 @@ INSERT INTO Employe
 /
 
 INSERT INTO Employe 
-  VALUES ('DEF','444444444','Montreui','Nicole',NULL,'1985-10-03','222 du crapaud','514-444-4444','Secrétaire','Administratif',NULL,NULL)
+  VALUES ('DEF','444444444','Montreuil','Nicole',NULL,'1985-10-03','222 du crapaud','514-444-4444','Secrétaire','Administratif',NULL,NULL)
 /
 
 INSERT INTO Employe 
