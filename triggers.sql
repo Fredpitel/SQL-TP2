@@ -1,6 +1,6 @@
 --
 -- Script de creation des tables
--- Frédéric Pitel;, Keven Blais
+-- FrÃ©dÃ©ric Pitel;, Keven Blais
 -- Code permanent: PITF16088608
 -- Code permanent: BLAK29019305
 -- 
@@ -13,7 +13,7 @@ BEFORE INSERT OR UPDATE ON Employe
 REFERENCING NEW AS ligneApres
 FOR EACH ROW
 WHEN (SYSDATE < ADD_MONTHS(ligneApres.DateNaissance, 192))
-BEGIN RAISE_APPLICATION_ERROR(-20000, 'L''employé n''est pas assez âgé.');
+BEGIN RAISE_APPLICATION_ERROR(-20000, 'L''employÃ© n''est pas assez Ã¢gÃ©.');
 END;
 /
 SHOW ERR;
@@ -22,9 +22,9 @@ CREATE TRIGGER FonctionCoherente
 BEFORE INSERT OR UPDATE ON Employe
 REFERENCING NEW AS ligneApres
 FOR EACH ROW
-WHEN((ligneApres.Service = 'Médical' AND ligneApres.Fonction NOT IN ('Vétérinaire', 'Infirmière'))
+WHEN((ligneApres.Service = 'MÃ©dical' AND ligneApres.Fonction NOT IN ('VÃ©tÃ©rinaire', 'InfirmiÃ¨re'))
 OR (ligneApres.Service = 'Surveillance' AND ligneApres.Fonction NOT IN ('Surveillant', 'Chef de zone'))
-OR (ligneApres.Service = 'Administratif' AND ligneApres.Fonction NOT IN ('Secrétaire', 'Comptable', 'Chef du personnel', 'Directeur')))
+OR (ligneApres.Service = 'Administratif' AND ligneApres.Fonction NOT IN ('SecrÃ©taire', 'Comptable', 'Chef du personnel', 'Directeur')))
 BEGIN RAISE_APPLICATION_ERROR(-20001, 'La fonction et le service sont incompatibles.');
 END;
 /
@@ -50,8 +50,9 @@ SELECT DISTINCT CodeZone INTO Code
 FROM Surveillance
 WHERE CodeEmploye = :ligneApres.CodeEmploye
 AND Jour = :ligneApres.Jour;
-IF NOT(Code = :ligneApres.CodeZone)
-THEN RAISE_APPLICATION_ERROR(-20003, 'Un surveillant ne peut pas surveiller plus d''une zone par jour.');
+IF NOT Code = :ligneApres.CodeZone
+THEN
+RAISE_APPLICATION_ERROR(-20003, 'Un surveillant ne peut pas surveiller plus d''une zone par jour.');
 END IF;
 EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
@@ -100,17 +101,15 @@ CREATE TRIGGER UnSeulSurveillant
 BEFORE INSERT OR UPDATE ON Surveillance
 REFERENCING NEW AS ligneApres
 FOR EACH ROW
-DECLARE nbSurveillant INTEGER;
+DECLARE CodeSurveillant VARCHAR(3);
 BEGIN
-SELECT COUNT(*) INTO nbSurveillant
+SELECT CodeEmploye INTO CodeSurveillant
 FROM Surveillance
 WHERE CodeLotissement = :ligneApres.CodeLotissement
 AND Jour = :ligneApres.Jour
 AND Heure = :ligneApres.Heure
-AND CodeZone = :ligneApres.CodeZone
-GROUP BY CodeLotissement
-HAVING COUNT(CodeEmploye) > 1;
-IF (nbSurveillant > 1)
+AND CodeZone = :ligneApres.CodeZone;
+IF NOT (CodeSurveillant IS NULL)
 THEN RAISE_APPLICATION_ERROR(-20005, 'Il ne peut pas avoir plus d''un surveillant par lotissement par zone par jour par heure.');
 END IF;
 EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
@@ -118,45 +117,24 @@ END;
 /
 SHOW ERR;
 
-CREATE TRIGGER LotissementsMemeZone
+CREATE TRIGGER HeureDifferente
 BEFORE INSERT OR UPDATE ON Surveillance
 REFERENCING NEW AS ligneApres
 FOR EACH ROW
-DECLARE nbZones INTEGER;
+DECLARE HeureExistante INTEGER;
 BEGIN
-SELECT COUNT(*) INTO nbZones
+SELECT Heure INTO HeureExistante
 FROM Surveillance
 WHERE CodeEmploye = :ligneApres.CodeEmploye
 AND Jour = :ligneApres.Jour
-GROUP BY CodeEmploye
-HAVING COUNT(CodeZone) > 1;
-IF (nbZones > 1)
-THEN RAISE_APPLICATION_ERROR(-20006, 'Tous les lotissements d''un surveillant pour un jour donné doivent être dans la même zone.');
+AND Heure = :ligneApres.Heure;
+IF NOT (HeureExistante IS NULL)
+THEN RAISE_APPLICATION_ERROR(-20005, 'Un surveillant ne peut pas surveiller deux lotissement diffÃ©rents pendant la mÃªme heure');
 END IF;
 EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
 /
 SHOW ERR;
-
-CREATE TRIGGER DateMesureDifferente
-BEFORE INSERT OR UPDATE ON Mesure
-REFERENCING NEW AS ligneApres
-FOR EACH ROW
-DECLARE nbDates INTEGER;
-BEGIN
-SELECT COUNT(*) INTO nbDates
-FROM Mesure
-WHERE CodeIndividu = :ligneApres.CodeIndividu
-GROUP BY DateMesure
-HAVING COUNT(*) > 1;
-IF (nbDates > 1)
-THEN RAISE_APPLICATION_ERROR(-20007, 'Les dates des mesures d''un même individu doivent toutes être différentes.');
-END IF;
-EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
-END;
-/
-SHOW ERR;
-
 
 CREATE TRIGGER choixSurveillant
 BEFORE INSERT OR UPDATE ON Choix
@@ -183,7 +161,7 @@ SELECT COUNT(Affinite) INTO noAffinite
 FROM Choix
 WHERE Affinite = :ligneApres.Affinite
 IF(noAffinite = 3)
-THEN RAISE_APPLICATION_ERROR(-20009,'l''une des affinitée a été choisie plus que 3 fois');
+THEN RAISE_APPLICATION_ERROR(-20009,'l''une des affinitÃ©e a Ã©tÃ© choisie plus que 3 fois');
 END IF;
 EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
