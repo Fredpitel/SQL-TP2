@@ -204,7 +204,7 @@ END;
 /
 SHOW ERR;
 
-CREATE TRIGGER choixLotissement
+CREATE TRIGGER consecutifLotissement
 BEFORE INSERT OR UPDATE ON Lotissement
 REFERENCING NEW AS ligneApres
 FOR EACH ROW
@@ -219,6 +219,37 @@ END;
 /
 SHOW ERR;
 
+CREATE TRIGGER excluNombre
+BEFORE INSERT OR UPDATE ON Individu
+REFERENCING NEW AS ligneApres
+FOR EACH ROW
+DECLARE noEspece INTEGER;
+SELECT CodeEspece INTO noEspece
+FROM Espece, Individu
+WHERE noEspece = :ligneApres.CodeEspece
+IF(Espece.Nombre > 0)
+THEN RAISE_APPLICATION_ERROR(-20012,'nombre et individu ne peuvent etre selectionner silmultanement');
+END IF;
+END;
+/
+SHOW ERR;
+
+CREATE TRIGGER excluIndividu
+BEFORE INSERT OR UPDATE ON Espece
+REFERENCING NEW AS ligneApres
+FOR EACH ROW
+DECLARE noEspece INTEGER;
+SELECT CodeEspece INTO noEspece
+FROM Espece, Individu
+WHERE noEspece = :ligneApres.CodeEspece AND EXISTS (
+    SELECT * INTO noEspece
+    FROM Espece, Individu
+    WHERE Espece.CodeEspece = Individu.CodeEspece
+    )
+IF(Espece.Nombre > 0)
+THEN RAISE_APPLICATION_ERROR(-20013,'nombre et individu ne peuvent etre selectionner silmultanement');
+END IF;
+END;
 SPOOL OFF;
 
 SET ECHO OFF
