@@ -31,7 +31,7 @@ INSERT INTO Employe
 /
 
 INSERT INTO Employe 
-  VALUES ('FGH','666666666','Bleau','Laurence',NULL,'1985-10-03','47 de Pragues','514-666-6666','Infirmière','Médical',NULL,NULL)
+  VALUES ('FGH','666666666','Pitel','Laurence','Bleau','1985-10-03','47 de Pragues','514-666-6666','Infirmière','Médical',NULL,NULL)
 /
 
 INSERT INTO Employe 
