@@ -89,6 +89,10 @@ INSERT INTO Lotissement
  	VALUES(2,2,'Savane')
 /
 
+INSERT INTO Lotissement
+ 	VALUES(2,4,'Plaine')
+/
+
 INSERT INTO Surveillance
  	VALUES('IJH',1,	1,'Lundi',9)
 /
@@ -119,6 +123,10 @@ INSERT INTO Espece
 
 INSERT INTO Espece
  	VALUES(2,'Moineau',30,2,1)
+/
+
+INSERT INTO Espece
+ 	VALUES(3,'ourang-outan',NULL,1,2)
 /
 
 INSERT INTO Individu

@@ -84,6 +84,73 @@ INSERT INTO Surveillance
 ROLLBACK
 /
 
+
+
+-- Tests choixSurveillant
+
+INSERT INTO Choix
+ 	VALUES('JHK',1,1)
+/
+ROLLBACK
+/
+
+-- Tests choixAffinite
+
+INSERT ALL
+INTO Choix 	VALUES('IJH',1,1)
+INTO Choix      VALUES('IJH',2,1)
+INTO Choix      VALUES('IJH',3,1)
+/
+ROLLBACK
+/
+
+-- Tests choixLotissement
+
+INSERT INTO Espece
+    VALUES(1,'Gorille',NULL,1,2)
+/
+ROLLBACK
+/
+
+-- Tests consecutifLotissement
+
+INSERT INTO Lotissement
+    VALUES(2,3,'Foret')
+/
+ROLLBACK
+/
+
+-- Tests excluNombre
+INSERT INTO Individu
+    VALUES(4,'bibi',2,'A-','1999/01/19',NULL,NULL,NULL)
+/
+ROLLBACK
+/
+
+-- Tests excluIndividu
+INSERT INTO Espece
+    VALUES(3,'gazelle',30,2,2)
+INSERT INTO Individu
+    VALUES(5,'bambi',3,'A-','2005/01/19',NULL,NULL,NULL)
+/
+ROLLBACK
+/
+
+
+-- Tests excluIndividu
+INSERT INTO Individu
+    VALUES(4,'Bobo',3,'A-','1993/01/19',NULL,1,2)
+/
+ROLLBACK
+/
+
+-- Tests siPereAlorsMere
+INSERT INTO Individu
+    VALUES(4,'Bobo',1,'A-','1993/01/19',NULL,1,NULL)
+/
+ROLLBACK
+/
+
 SPOOL OFF;
 SET ECHO OFF
 SET PAGESIZE 30
