@@ -236,7 +236,7 @@ WHERE CodeIndividu = :ligneApres.Pere;
 SELECT CodeEspece INTO especeMere
 FROM Individu
 WHERE CodeIndividu = :ligneApres.Mere;
-IF(especePere = especeMere AND especePere <> :ligneApres.CodeEspece)
+IF(especePere = especeMere AND especePere <> :ligneApres.CodeEspece AND NOT especePere IS NULL)
 THEN RAISE_APPLICATION_ERROR(-20014,'Si les parent sont de la meme espèce alors l''enfant doit être lui aussi de la même espèce');
 END IF;
 EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
