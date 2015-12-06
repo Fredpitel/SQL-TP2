@@ -18,8 +18,8 @@ NomJeuneFille VARCHAR(30),
 DateNaissance DATE NOT NULL,
 Adresse VARCHAR(100) NOT NULL,
 Telephone VARCHAR(12) NOT NULL,
-Fonction VARCHAR(30) NOT NULL CHECK (Fonction IN ('Vétérinaire', 'Infirmière', 'Surveillant', 'Chef de zone', 'Secrétaire', 'Comptable', 'Chef du personnel', 'Directeur')),
-Service VARCHAR(30) NOT NULL CHECK (Service IN ('Médical', 'Surveillance', 'Administratif')),
+Fonction VARCHAR(30) NOT NULL CHECK (Fonction IN ('VÃ©tÃ©rinaire', 'InfirmiÃ¨re', 'Surveillant', 'Chef de zone', 'SecrÃ©taire', 'Comptable', 'Chef du personnel', 'Directeur')),
+Service VARCHAR(30) NOT NULL CHECK (Service IN ('MÃ©dical', 'Surveillance', 'Administratif')),
 Taux INTEGER CHECK (Taux > 0),
 Grade VARCHAR(2) CHECK (Grade IN ('G1', 'G2', 'G3', 'G4', 'G5'))
 )
