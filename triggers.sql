@@ -189,11 +189,11 @@ BEFORE INSERT OR UPDATE ON Lotissement
 REFERENCING NEW AS ligneApres
 FOR EACH ROW
 DECLARE noLotissement INTEGER;
-SELECT CodeLotissement INTO  noLotissement
+SELECT MAX(CodeLotissement) INTO  noLotissement
 FROM Lotissement
 WHERE CodeZone = :ligneApres.CodeZone
-IF(noLotissement > :ligneApres.Lotissement)
-THEN RAISE_APPLICATION_ERROR(-20011,'l''ordre des lotissement doit etre croissant');
+IF(:ligneApres.Lotissement <> noLotissement + 1 )
+THEN RAISE_APPLICATION_ERROR(-20011,'l''ordre des lotissement doit etre consequtif');
 END IF;
 EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;

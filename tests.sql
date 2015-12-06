@@ -120,6 +120,12 @@ INSERT INTO Lotissement
 ROLLBACK
 /
 
+INSERT INTO Lotissement
+    VALUES(2,6,'Foret')
+/
+ROLLBACK
+/
+
 -- Tests excluNombre
 INSERT INTO Individu
     VALUES(4,'bibi',2,'A-','1999/01/19',NULL,NULL,NULL)
