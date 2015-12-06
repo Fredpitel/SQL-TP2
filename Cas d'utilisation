@@ -54,13 +54,13 @@ Une table contenant le prÃ©nom et le nom de chaque chef de zone suivi du code de
         SELECT CodeIndividu, NomIndividu ,CodeEspece ,Sang ,DateNaissance ,DateDeces ,Pere, Mere
         FROM Individu I , Espece E
         WHERE E.CodeEspece = I.CodeEspece
-        AND   E.CodeZone = ZoneRechercher
-        AND   E.CodeLotissement IN (LotissementRechercher1,LotissementRechercher2, ect...)
+        AND   E.CodeZone = 1
+        AND   E.CodeLotissement IN (1,2, ect...)
         /
 
         Le résultat obtenu est : 
 
-        La liste de tous les individus vivant dans un lotissement particulier.
+        La liste de tous les individus vivant dans les lotissements 1 et 2 de la zone 1.
 
 
 
@@ -72,9 +72,9 @@ Une table contenant le prÃ©nom et le nom de chaque chef de zone suivi du code de
         SELECT CodeIndividu, NomIndividu ,CodeEspece ,Sang ,DateNaissance ,DateDeces ,Pere, Mere
         FROM Individu I , Espece E
         WHERE E.CodeEspece = I.CodeEspece
-        AND   E.CodeZone = ZoneRechercher
+        AND   E.CodeZone = 2
         /
 
         Le résultat obtenu est : 
 
-        La liste de tous les individus vivant dans une Zone particulière.
+        La liste de tous les individus vivant dans une Zone particulière dans ce cas la zone 2.
