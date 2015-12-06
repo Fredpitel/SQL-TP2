@@ -147,18 +147,19 @@ FROM Choix
 WHERE CodeEmploye = :ligneApres.CodeEmploye
 AND CodeZone = :ligneApres.CodeZone;
 IF NOT (noZone IS NULL)
-THEN RAISE_APPLICATION_ERROR(-20008,'Un surveillant ne peut pas choisir une zone plus d''une fois.');
+THEN RAISE_APPLICATION_ERROR(-20008, 'Un surveillant ne peut pas choisir une zone plus d''une fois.');
 END IF;
 EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
 /
-SHOW ERR;
 
+SHOW ERR;
 CREATE TRIGGER choixAffinite
 BEFORE INSERT OR UPDATE ON Choix
 REFERENCING NEW AS ligneApres
 FOR EACH ROW
 DECLARE noAffinite INTEGER;
+BEGIN
 SELECT COUNT(Affinite) INTO noAffinite
 FROM Choix
 WHERE Affinite = :ligneApres.Affinite
@@ -176,26 +177,27 @@ BEFORE INSERT OR UPDATE ON Espece
 REFERENCING NEW AS ligneApres
 FOR EACH ROW
 DECLARE noLotissement INTEGER;
+BEGIN
 SELECT CodeLotissement INTO  noLotissement
 FROM  Espece
-WHERE CodeEspece = :ligneApres.CodeEspece
-IF(noLotissement <> :ligneApres.Lotissement)
+WHERE CodeEspece = :ligneApres.CodeEspece;
+IF(noLotissement <> :ligneApres.CodeLotissement)
 THEN RAISE_APPLICATION_ERROR(-20010,'L''espèce possede déjà un lotissement');
 END IF;
 EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
 /
 SHOW ERR;
-
 CREATE TRIGGER consecutifLotissement
 BEFORE INSERT OR UPDATE ON Lotissement
 REFERENCING NEW AS ligneApres
 FOR EACH ROW
 DECLARE noLotissement INTEGER;
+BEGIN
 SELECT MAX(CodeLotissement) INTO  noLotissement
 FROM Lotissement
-WHERE CodeZone = :ligneApres.CodeZone
-IF(:ligneApres.Lotissement <> noLotissement + 1 )
+WHERE CodeZone = :ligneApres.CodeZone;
+IF(:ligneApres.CodeLotissement <> noLotissement + 1 )
 THEN RAISE_APPLICATION_ERROR(-20011,'L''ordre des lotissement doit être conséqutif');
 END IF;
 EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
@@ -207,11 +209,12 @@ CREATE TRIGGER excluNombre
 BEFORE INSERT OR UPDATE ON Individu
 REFERENCING NEW AS ligneApres
 FOR EACH ROW
-DECLARE noEspece INTEGER;
-SELECT Individu.CodeEspece INTO noEspece
-FROM Espece, Individu
-WHERE noEspece = :ligneApres.CodeEspece
-IF NOT(Espece.Nombre IS NULL)
+DECLARE NombreEspece INTEGER;
+BEGIN
+SELECT Nombre INTO NombreEspece
+FROM Espece
+WHERE CodeEspece = :ligneApres.CodeEspece;
+IF NOT(NombreEspece IS NULL)
 THEN RAISE_APPLICATION_ERROR(-20012,'Nombre et individu ne peuvent être selectionnés silmultanément');
 END IF;
 EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
@@ -219,34 +222,22 @@ END;
 /
 SHOW ERR;
 
-CREATE TRIGGER excluIndividu
-BEFORE INSERT OR UPDATE ON Espece
-REFERENCING NEW AS ligneApres
-FOR EACH ROW
-DECLARE noEspece INTEGER;
-SELECT Espece.CodeEspece INTO noEspece
-FROM Espece, Individu
-WHERE noEspece = :ligneApres.CodeEspece AND EXISTS (
-    SELECT *
-    FROM Espece, Individu
-    WHERE Espece.CodeEspece = Individu.CodeEspece
-    )
-IF NOT(:ligneApres.Nombre IS NULL)
-THEN RAISE_APPLICATION_ERROR(-20013,'Nombre et individu ne peuvent etre selectionner silmultanement');
-END IF;
-EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
-END;
-/
-SHOW ERR;
-
-
-CREATE TRIGGER parentEnfantMemeEspace
+CREATE TRIGGER parentEnfantMemeEspece
 BEFORE INSERT OR UPDATE ON Individu
 REFERENCING NEW AS ligneApres
 FOR EACH ROW
+DECLARE
+  especePere INTEGER;
+  especeMere INTEGER;
 BEGIN
-IF(:ligneApres.Pere.CodeEspece = :ligneApres.Mere.CodeEspece AND :ligneApres.Pere.CodeEspece <> :ligneApres.CodeEspece)
-THEN RAISE_APPLICATION_ERROR(-20014,'si les parent sont de la meme espece alors l''enfant doit etre lui aussi de la meme espece');
+SELECT CodeEspece INTO especePere
+FROM Individu
+WHERE CodeIndividu = :ligneApres.Mere;
+SELECT CodeEspece INTO especeMere
+FROM Individu
+WHERE CodeIndividu = :ligneApres.Mere;
+IF(especePere = especeMere AND especePere <> :ligneApres.CodeEspece)
+THEN RAISE_APPLICATION_ERROR(-20014,'Si les parent sont de la meme espèce alors l''enfant doit être lui aussi de la même espèce');
 END IF;
 EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
@@ -257,14 +248,14 @@ CREATE TRIGGER siPereAlorsMere
 BEFORE INSERT OR UPDATE ON Individu
 REFERENCING NEW AS ligneApres
 FOR EACH ROW
-IF(:ligneApres.Pere <> NULL AND :ligneApres.Mere = NULL)
-THEN RAISE_APPLICATION_ERROR(-20015,'si le pere est connu alors la mere doit aussi l''etre.');
-END IF
+BEGIN
+IF(NOT :ligneApres.Pere IS NULL AND :ligneApres.Mere IS NULL)
+THEN RAISE_APPLICATION_ERROR(-20015,'Si le père est connu alors la mère doit aussi l''être.');
+END IF;
 EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
 /
 SHOW ERR;
 
 SPOOL OFF;
-
 SET ECHO OFF
