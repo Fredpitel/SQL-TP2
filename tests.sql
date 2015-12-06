@@ -47,7 +47,7 @@ ROLLBACK
 
 -- Tests UneSeuleZoneParJour
 
-INSERT INTO Surveillance VALUES ('IJH', 2, 1, 'Lundi', 12)
+INSERT INTO Surveillance VALUES ('HKL', 2, 1, 'Lundi', 12)
 /
 ROLLBACK
 /
@@ -55,7 +55,7 @@ ROLLBACK
 -- Tests LotissementParHeurePrecedent
 
 INSERT INTO Surveillance
- 	VALUES('IJH',1,	2,'Lundi',11)
+ 	VALUES('HKL',1,	2,'Lundi',11)
 /
 ROLLBACK
 /
@@ -63,7 +63,7 @@ ROLLBACK
 -- Tests LotissementParHeureSuivant
 
 INSERT INTO Surveillance
- 	VALUES('IJH',2,	2,'Mardi',15)
+ 	VALUES('HKL',2,	2,'Mardi',15)
 /
 ROLLBACK
 /
@@ -71,7 +71,7 @@ ROLLBACK
 -- Tests UnSeulSurveillant
 
 INSERT INTO Surveillance
- 	VALUES('JHK',1,	1,'Lundi',9)
+ 	VALUES('HKL',1,	1,'Lundi',9)
 /
 ROLLBACK
 /
@@ -79,7 +79,7 @@ ROLLBACK
 -- Tests HeureDifferente
 
 INSERT INTO Surveillance
- 	VALUES('IJH',1,	2,'Lundi',9)
+ 	VALUES('HKL',1,	2,'Lundi',9)
 /
 ROLLBACK
 /
@@ -87,17 +87,14 @@ ROLLBACK
 -- Tests choixSurveillant
 
 INSERT INTO Choix
- 	VALUES('JHK',1,1)
+ 	VALUES('HKL',1,1)
 /
 ROLLBACK
 /
 
 -- Tests choixAffinite
 
-INSERT ALL
-INTO Choix 	VALUES('IJH',1,1)
-INTO Choix      VALUES('IJH',2,1)
-INTO Choix      VALUES('IJH',3,1)
+INSERT INTO Choix VALUES('KLM',4,1)
 /
 ROLLBACK
 /
@@ -124,15 +121,6 @@ INSERT INTO Individu
 /
 ROLLBACK
 /
-
--- Tests excluIndividu
-UPDATE Espece
-    SET Nombre = 5
-    WHERE CodeEspece = 1
-/
-ROLLBACK
-/
-
 
 -- Tests excluIndividu
 INSERT INTO Individu
