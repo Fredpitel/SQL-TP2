@@ -55,7 +55,7 @@ Une table contenant le prÃ©nom et le nom de chaque chef de zone suivi du code de
         FROM Individu I , Espece E
         WHERE E.CodeEspece = I.CodeEspece
         AND   E.CodeZone = 1
-        AND   E.CodeLotissement IN (1,2, ect...)
+        AND   E.CodeLotissement IN (1,2)
         /
 
         Le résultat obtenu est : 
