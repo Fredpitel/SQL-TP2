@@ -84,8 +84,6 @@ INSERT INTO Surveillance
 ROLLBACK
 /
 
-
-
 -- Tests choixSurveillant
 
 INSERT INTO Choix
@@ -113,12 +111,6 @@ ROLLBACK
 /
 
 -- Tests consecutifLotissement
-
-INSERT INTO Lotissement
-    VALUES(2,3,'Foret')
-/
-ROLLBACK
-/
 
 INSERT INTO Lotissement
     VALUES(2,6,'Foret')
