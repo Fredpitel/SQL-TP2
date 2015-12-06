@@ -45,3 +45,36 @@ Une table contenant le nom de la zone et le prÃ©nom et le nom de chaque employÃ©
 â€¢	Le rÃ©sultat obtenu est : 
 
 Une table contenant le prÃ©nom et le nom de chaque chef de zone suivi du code de la zone quâ€™il doit surveiller.
+
+
+3.3. Cas d’utilisation « Afficher la liste des pensionnaires par lotissements. »
+
+        Donne la liste des pensionnaires pour un ou plusieurs lotissements d'une meme zone
+        
+        SELECT CodeIndividu, NomIndividu ,CodeEspece ,Sang ,DateNaissance ,DateDeces ,Pere, Mere
+        FROM Individu I , Espece E
+        WHERE E.CodeEspece = I.CodeEspece
+        AND   E.CodeZone = ZoneRechercher
+        AND   E.CodeLotissement IN (LotissementRechercher1,LotissementRechercher2, ect...)
+        /
+
+        Le résultat obtenu est : 
+
+        La liste de tous les individus vivant dans un lotissement particulier.
+
+
+
+
+3.4. Cas d’utilisation « Afficher la liste des pensionnaires par Zone. »
+
+        Donne la liste des pensionnaires pour une Zone.
+        
+        SELECT CodeIndividu, NomIndividu ,CodeEspece ,Sang ,DateNaissance ,DateDeces ,Pere, Mere
+        FROM Individu I , Espece E
+        WHERE E.CodeEspece = I.CodeEspece
+        AND   E.CodeZone = ZoneRechercher
+        /
+
+        Le résultat obtenu est : 
+
+        La liste de tous les individus vivant dans une Zone particulière.
