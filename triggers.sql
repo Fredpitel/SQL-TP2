@@ -144,10 +144,12 @@ DECLARE noZone INTEGER;
 BEGIN
 SELECT CodeZone INTO noZone
 FROM Choix
-WHERE CodeEmploye <> :ligneApres.CodeEmploye
-IF(noZone = :ligneApres.CodeZone)
-THEN RAISE_APPLICATION_ERROR(-20008,'plusieur surveillant ne peuvent survayer le meme endroit');
+WHERE CodeEmploye = :ligneApres.CodeEmploye
+AND CodeZone = :ligneApres.CodeZone;
+IF NOT (noZone IS NULL)
+THEN RAISE_APPLICATION_ERROR(-20008,'Un surveillant ne peut pas choisir une zone plus d'une fois.');
 END IF;
+EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
 /
 SHOW ERR;
@@ -160,8 +162,9 @@ DECLARE noAffinite INTEGER;
 SELECT COUNT(Affinite) INTO noAffinite
 FROM Choix
 WHERE Affinite = :ligneApres.Affinite
+AND CodeEmploye = :ligneApres.CodeEmploye;
 IF(noAffinite = 3)
-THEN RAISE_APPLICATION_ERROR(-20009,'l''une des affinitée a été choisie plus que 3 fois');
+THEN RAISE_APPLICATION_ERROR(-20009,'L''une des affinitée a été choisie plus que 3 fois');
 END IF;
 EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
@@ -177,7 +180,7 @@ SELECT CodeLotissement INTO  noLotissement
 FROM  Espece
 WHERE CodeEspece = :ligneApres.CodeEspece
 IF(noLotissement <> :ligneApres.Lotissement)
-THEN RAISE_APPLICATION_ERROR(-20010,'l''espece possede deja un lotissement');
+THEN RAISE_APPLICATION_ERROR(-20010,'L''espèce possede déjà un lotissement');
 END IF;
 EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
@@ -193,7 +196,7 @@ SELECT MAX(CodeLotissement) INTO  noLotissement
 FROM Lotissement
 WHERE CodeZone = :ligneApres.CodeZone
 IF(:ligneApres.Lotissement <> noLotissement + 1 )
-THEN RAISE_APPLICATION_ERROR(-20011,'l''ordre des lotissement doit etre consequtif');
+THEN RAISE_APPLICATION_ERROR(-20011,'L''ordre des lotissement doit être conséqutif');
 END IF;
 EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
@@ -208,8 +211,8 @@ DECLARE noEspece INTEGER;
 SELECT Individu.CodeEspece INTO noEspece
 FROM Espece, Individu
 WHERE noEspece = :ligneApres.CodeEspece
-IF(Espece.Nombre > 0)
-THEN RAISE_APPLICATION_ERROR(-20012,'nombre et individu ne peuvent etre selectionner silmultanement');
+IF NOT(Espece.Nombre IS NULL)
+THEN RAISE_APPLICATION_ERROR(-20012,'Nombre et individu ne peuvent être selectionnés silmultanément');
 END IF;
 EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
@@ -228,8 +231,8 @@ WHERE noEspece = :ligneApres.CodeEspece AND EXISTS (
     FROM Espece, Individu
     WHERE Espece.CodeEspece = Individu.CodeEspece
     )
-IF(Espece.Nombre > 0)
-THEN RAISE_APPLICATION_ERROR(-20013,'nombre et individu ne peuvent etre selectionner silmultanement');
+IF NOT(:ligneApres.Nombre IS NULL)
+THEN RAISE_APPLICATION_ERROR(-20013,'Nombre et individu ne peuvent etre selectionner silmultanement');
 END IF;
 EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
@@ -241,14 +244,14 @@ CREATE TRIGGER parentEnfantMemeEspace
 BEFORE INSERT OR UPDATE ON Individu
 REFERENCING NEW AS ligneApres
 FOR EACH ROW
+BEGIN
 IF(:ligneApres.Pere.CodeEspece = :ligneApres.Mere.CodeEspece AND :ligneApres.Pere.CodeEspece <> :ligneApres.CodeEspece)
 THEN RAISE_APPLICATION_ERROR(-20014,'si les parent sont de la meme espece alors l''enfant doit etre lui aussi de la meme espece');
-END IF
+END IF;
 EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
 /
 SHOW ERR;
-
 
 CREATE TRIGGER siPereAlorsMere
 BEFORE INSERT OR UPDATE ON Individu
