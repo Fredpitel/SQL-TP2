@@ -147,7 +147,7 @@ FROM Choix
 WHERE CodeEmploye = :ligneApres.CodeEmploye
 AND CodeZone = :ligneApres.CodeZone;
 IF NOT (noZone IS NULL)
-THEN RAISE_APPLICATION_ERROR(-20008,'Un surveillant ne peut pas choisir une zone plus d'une fois.');
+THEN RAISE_APPLICATION_ERROR(-20008,'Un surveillant ne peut pas choisir une zone plus d''une fois.');
 END IF;
 EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
