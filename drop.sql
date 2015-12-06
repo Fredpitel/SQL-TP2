@@ -5,6 +5,7 @@
 -- Code permanent: BLAK29019305
 -- 
 SET ECHO ON
+SPOOL drop.res;
 
 DROP TABLE Mesure;
 
@@ -56,10 +57,9 @@ DROP TRIGGER consecutifLotissement;
 
 DROP TRIGGER excluNombre;
 
-DROP TRIGGER excluIndividu;
-
-DROP TRIGGER parentEnfantMemeEspace;
+DROP TRIGGER parentEnfantMemeEspece;
 
 DROP TRIGGER siPereAlorsMere;
 
+SPOOL OFF;
 SET ECHO OFF
