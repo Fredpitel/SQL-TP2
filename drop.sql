@@ -46,4 +46,20 @@ DROP TRIGGER LotissementsMemeZone;
 
 DROP TRIGGER DateMesureDifferente;
 
+DROP TRIGGER choixSurveillant;
+
+DROP TRIGGER choixAffinite;
+
+DROP TRIGGER choixLotissement;
+
+DROP TRIGGER consecutifLotissement;
+
+DROP TRIGGER excluNombre;
+
+DROP TRIGGER excluIndividu;
+
+DROP TRIGGER parentEnfantMemeEspace;
+
+DROP TRIGGER siPereAlorsMere;
+
 SET ECHO OFF
