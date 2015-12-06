@@ -43,11 +43,19 @@ INSERT INTO Employe
 /
 
 INSERT INTO Employe 
-  VALUES ('IJH','999999999','Aubut','Marcel',NULL,'1985-10-03','5869 Papineau','514-999-9999','Surveillant','Surveillance',50,'G1')
+  VALUES ('IJH','999999999','Aubut','Marcel',NULL,'1985-10-03','5869 Papineau','514-999-9999','Chef de zone','Surveillance',100,'G4')
 /
 
 INSERT INTO Employe 
-  VALUES ('JHK','000000000','Paquette','Jean-Paul',NULL,'1985-10-03','6923 de Lorimier','514-000-0000','Surveillant','Surveillance',70,'G2')
+  VALUES ('JHK','000000000','Paquette','Jean-Paul',NULL,'1985-10-03','6923 de Lorimier','514-000-0000','Chef de zone','Surveillance',80,'G4')
+/
+
+INSERT INTO Employe 
+  VALUES ('HKL','121212121','Parent','Paul',NULL,'1985-10-03','1234 de L''ʴoile','514-000-0000','Surveillant','Surveillance',80,'G1')
+/
+
+INSERT INTO Employe 
+  VALUES ('KLM','212121212','Pilon','Pierre',NULL,'1985-10-03','2727 Whatever','514-000-0000','Surveillant','Surveillance',80,'G1')
 /
 
 INSERT INTO Salaire
@@ -63,11 +71,19 @@ INSERT INTO Salaire
 /
 
 INSERT INTO Zones
- 	VALUES(1,'Singe','GHI')
+ 	VALUES(1,'Singes','GHI')
 /
 
 INSERT INTO Zones
  	VALUES(2,'Oiseaux','HIJ')
+/
+
+INSERT INTO Zones
+ 	VALUES(3,'Reptiles','IJH')
+/
+
+INSERT INTO Zones
+ 	VALUES(4,'Poissons','JHK')
 /
 
 INSERT INTO Lotissement
@@ -91,27 +107,47 @@ INSERT INTO Lotissement
 /
 
 INSERT INTO Surveillance
- 	VALUES('IJH',1,	1,'Lundi',9)
+ 	VALUES('HKL',1,	1,'Lundi',9)
 /
 
 INSERT INTO Surveillance
- 	VALUES('IJH',1,	2,'Lundi',10)
+ 	VALUES('HKL',1,	2,'Lundi',10)
 /
 
 INSERT INTO Surveillance
- 	VALUES('IJH',2,	2,'Mardi',16)
+ 	VALUES('HKL',2,	2,'Mardi',16)
 /
 
 INSERT INTO Surveillance
- 	VALUES('IJH',2,	1,'Mardi',17)
+ 	VALUES('HKL',2,	1,'Mardi',17)
 /
 
 INSERT INTO Choix
- 	VALUES('IJH',2,1)
+ 	VALUES('HKL',1,0)
 /
 
 INSERT INTO Choix
- 	VALUES('IJH',1,0)
+ 	VALUES('HKL',2,0)
+/
+
+INSERT INTO Choix
+ 	VALUES('HKL',3,0)
+/
+
+INSERT INTO Choix
+ 	VALUES('HKL',4,1)
+/
+
+INSERT INTO Choix
+ 	VALUES('KLM',1,1)
+/
+
+INSERT INTO Choix
+ 	VALUES('KLM',2,1)
+/
+
+INSERT INTO Choix
+ 	VALUES('KLM',3,1)
 /
 
 INSERT INTO Espece
