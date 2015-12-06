@@ -87,7 +87,7 @@ INSERT INTO Lotissement
 /
 
 INSERT INTO Lotissement
- 	VALUES(2,4,'Plaine')
+ 	VALUES(2,3,'Plaine')
 /
 
 INSERT INTO Surveillance
