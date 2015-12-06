@@ -71,7 +71,7 @@ ROLLBACK
 -- Tests UnSeulSurveillant
 
 INSERT INTO Surveillance
- 	VALUES('HKL',1,	1,'Lundi',9)
+ 	VALUES('KLM',1,	1,'Lundi',9)
 /
 ROLLBACK
 /
