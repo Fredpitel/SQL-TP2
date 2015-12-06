@@ -232,7 +232,7 @@ DECLARE
 BEGIN
 SELECT CodeEspece INTO especePere
 FROM Individu
-WHERE CodeIndividu = :ligneApres.Mere;
+WHERE CodeIndividu = :ligneApres.Pere;
 SELECT CodeEspece INTO especeMere
 FROM Individu
 WHERE CodeIndividu = :ligneApres.Mere;
