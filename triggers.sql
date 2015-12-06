@@ -252,7 +252,6 @@ BEGIN
 IF(NOT :ligneApres.Pere IS NULL AND :ligneApres.Mere IS NULL)
 THEN RAISE_APPLICATION_ERROR(-20015,'Si le père est connu alors la mère doit aussi l''être.');
 END IF;
-EXCEPTION WHEN NO_DATA_FOUND THEN NULL;
 END;
 /
 SHOW ERR;
