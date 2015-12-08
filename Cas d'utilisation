@@ -1,7 +1,7 @@
-3.1. Cas d’utilisation « Noms de zones et les noms et prénoms des surveillants qui apprécient cette zone et dans lequel le nombre de volontaires est inférieur ou égal au nombre de lotissements à surveiller. »
-	Opération 1. 
+3.1. Cas d'utilisation « Noms de zones et les noms et prénoms des surveillants qui apprécient cette zone et dans lequel le nombre de volontaires est inférieur ou égal au nombre de lotissements à  surveiller. »
+	Opération 1. 
 
-Trouver les noms des zones dont le nombre de volontaires est inférieur ou égal au nombre de lotissements à surveiller.
+Trouver les noms des zones dont le nombre de volontaires est inférieur ou égal au nombre de lotissements à  surveiller.
 
 SELECT CodeZone
 FROM Lotissement A
@@ -11,11 +11,11 @@ HAVING COUNT(CodeLotissement) >= (SELECT COUNT(CodeEmploye)
                                   WHERE Affinite = 0 AND B.CodeZone = A.CodeZone)
 /
 
-•	Le résultat obtenu est : 
+	Le résultat obtenu est : 
 
 Une table de codes de zones qui répondent aux critères. (Appelés ZoneRésultat ci-après)
 
-	Opération 2. 
+	Opération 2. 
 
 Obtenir les des zones trouvées et les noms des surveillants qui apprécient les zones trouvées.
 
@@ -28,12 +28,12 @@ AND C.CodeEmploye = A.CodeEmploye
 AND B.CodeZone = C.CodeZone
    /
 
-•	Le résultat obtenu est : 
+	Le résultat obtenu est : 
 
 Une table contenant le nom de la zone et le prénom et le nom de chaque employé qui apprécie cette zone.
 
-3.2. Cas d’utilisation « Afficher la liste des Chefs de zone par Zone. »
-	Opération 1. 
+3.2. Cas d'utilisation « Afficher la liste des Chefs de zone par Zone. »
+	Opération 1. 
 
    Trouver le nom des chefs de chaque zone.
 
@@ -42,12 +42,12 @@ Une table contenant le nom de la zone et le prénom et le nom de chaque employé
    WHERE CodeEmploye = ChefZone
    /
 
-•	Le résultat obtenu est : 
+	Le résultat obtenu est : 
 
-Une table contenant le prénom et le nom de chaque chef de zone suivi du code de la zone qu’il doit surveiller.
+Une table contenant le prénom et le nom de chaque chef de zone suivi du code de la zone qu'il doit surveiller.
 
 
-3.3.1 Cas d�utilisation � Afficher la liste des pensionnaires par lotissements. �
+3.3.1 Cas d'utilisation « Afficher la liste des pensionnaires par lotissements. »
 
         Donne la liste des pensionnaires pour un ou plusieurs lotissements d'une meme zone
         
@@ -58,14 +58,14 @@ Une table contenant le prénom et le nom de chaque chef de zone suivi du code de
         AND   E.CodeLotissement IN (1,2)
         /
 
-        Le r�sultat obtenu est : 
+        Le résultat obtenu est : 
 
         La liste de tous les individus vivant dans les lotissements 1 et 2 de la zone 1.
 
 
 
 
-3.3.2 Cas d�utilisation � Afficher la liste des pensionnaires par Zone. �
+3.3.2 Cas d'utilisation « Afficher la liste des pensionnaires par Zone. »
 
         Donne la liste des pensionnaires pour une Zone.
         
@@ -75,11 +75,11 @@ Une table contenant le prénom et le nom de chaque chef de zone suivi du code de
         AND   E.CodeZone = 2
         /
 
-        Le r�sultat obtenu est : 
+        Le résultat obtenu est : 
 
-        La liste de tous les individus vivant dans une Zone particuli�re dans ce cas la zone 2.
+        La liste de tous les individus vivant dans une Zone particulière dans ce cas la zone 2.
 
-3.4.  Cas d�utilisation �Afficher la liste des lotissements par Zone�
+3.4.  Cas d'utilisation «Afficher la liste des lotissements par Zone»
         
       donne la liste des lotissements dans une zone
 
@@ -87,6 +87,6 @@ Une table contenant le prénom et le nom de chaque chef de zone suivi du code de
       FROM Lotissement
       WHERE CodeZone = 1
       
-      Le r�sultat obtenu est : 
+      Le résultat obtenu est : 
 
       la liste des lotissements pour la zone rechercher ici la zone 1.
