@@ -45,3 +45,22 @@ Keven:
 - Date de naissance et déces des parents cohérents ---FAIT---
 - Si parents sont de la même espèce alors individu apartient à la même espèce
 - Si Père est connu alors Mère est connue
+
+
+
+
+index (pour word)
+Salaire
+ -ICodeEmployeSalaire(CodeEmploye) 
+Surveillance
+ -ICodeEmployeSurveillance(CodeEmploye) 
+Choix
+-ICodeEmployeChoix(CodeEmploye) 
+Lotissement
+-ICodeZoneLotissement(CodeZone) 
+Surveillance
+-ICodeZoneSurveillance(CodeZone) 
+Choix
+-ICodeZoneChoix(CodeZone) 
+Espece
+-ICodeZoneEspece(CodeZone) 
