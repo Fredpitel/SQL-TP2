@@ -51,11 +51,11 @@ Une table contenant le prénom et le nom de chaque chef de zone suivi du code de
 
         Donne la liste des pensionnaires pour un ou plusieurs lotissements d'une meme zone
         
-        SELECT CodeIndividu, NomIndividu ,CodeEspece ,Sang ,DateNaissance ,DateDeces ,Pere, Mere
+        SELECT I.CodeIndividu, I.NomIndividu ,I.CodeEspece ,I.Sang ,I.DateNaissance ,I.DateDeces ,I.Pere, I.Mere
         FROM Individu I , Espece E
         WHERE E.CodeEspece = I.CodeEspece
         AND   E.CodeZone = 1
-        AND   E.CodeLotissement IN (1,2)
+        AND   E.CodeLotissement IN (1 ,2);
         /
 
         Le résultat obtenu est : 
@@ -69,10 +69,10 @@ Une table contenant le prénom et le nom de chaque chef de zone suivi du code de
 
         Donne la liste des pensionnaires pour une Zone.
         
-        SELECT CodeIndividu, NomIndividu ,CodeEspece ,Sang ,DateNaissance ,DateDeces ,Pere, Mere
+        SELECT I.CodeIndividu, I.NomIndividu ,I.CodeEspece ,I.Sang ,I.DateNaissance ,I.DateDeces ,I.Pere, I.Mere
         FROM Individu I , Espece E
         WHERE E.CodeEspece = I.CodeEspece
-        AND   E.CodeZone = 2
+        AND   E.CodeZone = 2;
         /
 
         Le résultat obtenu est : 
