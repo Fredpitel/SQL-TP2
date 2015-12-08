@@ -109,7 +109,20 @@ PRIMARY KEY (CodeIndividu, DateMesure),
 FOREIGN KEY (CodeIndividu) REFERENCES Individu(CodeIndividu)
 )
 /
-
+CREATE INDEX ICodeEmployeSalaire ON Salaire(CodeEmploye) 
+/
+CREATE INDEX ICodeEmployeSurveillance ON Surveillance(CodeEmploye) 
+/
+CREATE INDEX ICodeEmployeChoix ON Choix(CodeEmploye) 
+/
+CREATE INDEX ICodeZoneLotissement ON Lotissement(CodeZone) 
+/
+CREATE INDEX ICodeZoneSurveillance ON Surveillance(CodeZone) 
+/
+CREATE INDEX ICodeZoneChoix ON Choix(CodeZone) 
+/
+CREATE INDEX ICodeZoneEspece ON Espece(CodeZone) 
+/
 SPOOL OFF
 
 SET ECHO OFF
