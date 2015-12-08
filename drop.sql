@@ -61,5 +61,19 @@ DROP TRIGGER parentEnfantMemeEspece;
 
 DROP TRIGGER siPereAlorsMere;
 
+DROP INDEX ICodeEmployeSalaire
+
+DROP INDEX ICodeEmployeSurveillance
+
+DROP INDEX ICodeEmployeChoix 
+
+DROP INDEX ICodeZoneLotissement
+
+DROP INDEX ICodeZoneSurveillance
+
+DROP INDEX ICodeZoneChoix
+
+DROP INDEX ICodeZoneEspece 
+
 SPOOL OFF;
 SET ECHO OFF
